@@ -1,75 +1,68 @@
-# Nuxt Minimal Starter
+## PostgreSQL 확장(Extension) 설정
 
-Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+### 기본 제공 확장 (CREATE EXTENSION으로 바로 활성화)
 
-## Setup
+- `pg_trgm` — 삼중 문자(trigram) 기반 유사 문자열 검색
 
-Make sure to install dependencies:
+### 별도 설치 필요 확장
 
-```bash
-# npm
-npm install
+- `pg_cron` — DB 내부 크론 스케줄러
+- `pgmq` — PostgreSQL 기반 메시지 큐
 
-# pnpm
-pnpm install
+---
 
-# yarn
-yarn install
-
-# bun
-bun install
-```
-
-## Development Server
-
-Start the development server on `http://localhost:3000`:
+### 설치 가능한 확장 목록 확인
 
 ```bash
-# npm
-npm run dev
-
-# pnpm
-pnpm dev
-
-# yarn
-yarn dev
-
-# bun
-bun run dev
+docker exec -it postgres psql -U postgres -c "SELECT name FROM pg_available_extensions ORDER BY name;"
 ```
 
-## Production
-
-Build the application for production:
+### 특정 확장 설치 여부 확인
 
 ```bash
-# npm
-npm run build
-
-# pnpm
-pnpm build
-
-# yarn
-yarn build
-
-# bun
-bun run build
+docker exec -it postgres psql -U postgres -c "SELECT * FROM pg_available_extensions WHERE name = 'pg_cron';"
 ```
 
-Locally preview production build:
+---
+
+### pg_cron 설치 (PostgreSQL 18 기준)
 
 ```bash
-# npm
-npm run preview
+# 1. 컨테이너에 pg_cron 바이너리 설치
+docker exec -it --user root postgres bash -c "
+  apt-get update && apt-get install -y postgresql-18-cron
+"
 
-# pnpm
-pnpm preview
+# 2. postgresql.conf 경로 확인
+docker exec -it postgres find /var/lib/postgresql -name "postgresql.conf"
 
-# yarn
-yarn preview
+# 3. shared_preload_libraries 설정 추가
+docker exec -it --user postgres postgres bash -c "
+  echo \"shared_preload_libraries = 'pg_cron'\" >> /var/lib/postgresql/18/docker/postgresql.conf
+"
 
-# bun
-bun run preview
+# 4. 컨테이너 재시작
+docker restart postgres
 ```
 
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+> 주의: 컨테이너를 삭제하면 설치한 바이너리가 사라집니다. 영구 적용은 `Dockerfile.postgres`로 이미지를 빌드하세요.
+
+### docker-compose로 영구 적용 (권장)
+
+```bash
+docker stop postgres && docker rm postgres
+docker-compose up -d --build
+```
+
+---
+
+### 확장 활성화 (서버 시작 시 자동 실행)
+
+`server/plugins/db.ts`의 `EXTENSIONS` 배열에 확장명을 추가하면 서버 시작 시 자동으로 `CREATE EXTENSION IF NOT EXISTS`를 실행합니다.
+
+```ts
+const EXTENSIONS: string[] = [
+  'pg_trgm',
+  'pg_cron',
+]
+```

@@ -8,6 +8,6 @@ export default defineNuxtConfig({
     '@nuxt/ui',
     '@nuxt/eslint',
     '@nuxt/scripts',
-    '@artmizu/nuxt-prometheus'
-  ]
+    '@artmizu/nuxt-prometheus',
+  ],
 })
