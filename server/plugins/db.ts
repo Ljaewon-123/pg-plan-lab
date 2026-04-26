@@ -1,6 +1,6 @@
 import { Kysely, PostgresDialect } from 'kysely'
 import pg from 'pg'
-import { EXTENSIONS } from './extensions.constants'
+import { EXTENSIONS } from '../constants/extensions.constants'
 
 export interface Database {
   none: never
@@ -12,7 +12,6 @@ export default defineNitroPlugin(async (nitroApp) => {
     connectionString: process.env.DATABASE_URL,
     max: 10,
   })
-
   const client = await pool.connect()
   try {
     for (const ext of EXTENSIONS) {
@@ -21,11 +20,9 @@ export default defineNitroPlugin(async (nitroApp) => {
   } finally {
     client.release()
   }
-
   nitroApp.db = new Kysely<Database>({
     dialect: new PostgresDialect({ pool }),
   })
-
   nitroApp.hooks.hook('close', async () => {
     await nitroApp.db.destroy()
   })

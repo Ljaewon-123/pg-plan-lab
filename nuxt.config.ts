@@ -10,4 +10,6 @@ export default defineNuxtConfig({
     '@nuxt/scripts',
     '@artmizu/nuxt-prometheus',
   ],
+
+  css: ['~/assets/css/main.css', 'pev2/dist/pev2.css'],
 })

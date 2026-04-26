@@ -1,5 +1,7 @@
 ## PostgreSQL 확장(Extension) 설정
 
+## localhost전용으로 만들어져 SQL-INJECTION같은 취약점 공격은 생각 하지 않고 raw query를 그대로 사용한다.
+
 ### 기본 제공 확장 (CREATE EXTENSION으로 바로 활성화)
 
 - `pg_trgm` — 삼중 문자(trigram) 기반 유사 문자열 검색
