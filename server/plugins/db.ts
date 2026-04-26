@@ -1,6 +1,6 @@
 import { Kysely, PostgresDialect } from 'kysely'
 import pg from 'pg'
-import { EXTENSIONS } from './config.constants'
+import { EXTENSIONS } from './extensions.constants'
 
 export interface Database {
   none: never
