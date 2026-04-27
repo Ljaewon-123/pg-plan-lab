@@ -2,7 +2,8 @@
 
 <template>
   <div class="min-h-screen flex flex-col">
-    <main class="flex-1">
+    <HeaderNav />
+    <main class="flex-1 flex flex-col overflow-hidden">
       <slot />
     </main>
   </div>

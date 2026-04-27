@@ -1,1 +1,1 @@
-export const EXTENSIONS: string[] = ['pg_trgm', 'pg_cron']
+export const EXTENSIONS: readonly string[] = ['pg_trgm', 'pg_cron']
