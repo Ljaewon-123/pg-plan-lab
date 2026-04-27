@@ -1,7 +1,0 @@
-{
-  "permissions": {
-    "allow": [
-      "Bash(node -e \"const p = require\\('c:/Work_spaces/pg-plan-lab/node_modules/@nuxt/ui/package.json'\\); console.log\\(p.version\\)\")"
-    ]
-  }
-}
