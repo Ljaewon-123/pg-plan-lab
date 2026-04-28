@@ -82,7 +82,7 @@ function isCellNull(val: unknown): boolean {
     <div class="flex items-center gap-3 flex-wrap">
       <USelect
         v-model="selectedTable"
-        :options="tableOptions"
+        :items="tableOptions"
         placeholder="테이블 선택..."
         class="w-64"
       />

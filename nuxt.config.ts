@@ -4,7 +4,7 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
 
   modules: [
-    '@nuxt/a11y',
+    // '@nuxt/a11y',
     '@nuxt/ui',
     '@nuxt/eslint',
     '@nuxt/scripts',

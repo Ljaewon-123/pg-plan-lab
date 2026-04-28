@@ -44,7 +44,7 @@ function handleSearch() {
         <span class="text-xs text-gray-500 w-24 shrink-0">검색 컬럼</span>
         <USelect
           v-model="searchColumn"
-          :options="tableColumns.map((c) => ({ label: c, value: c }))"
+          :items="tableColumns.map((c) => ({ label: c, value: c }))"
           size="sm"
           class="flex-1"
         />

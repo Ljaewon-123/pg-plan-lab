@@ -24,7 +24,7 @@ const emit = defineEmits<{ refresh: []; add: [] }>()
       <span class="text-xs text-gray-500">테이블</span>
       <USelect
         v-model="model"
-        :options="options"
+        :items="options"
         placeholder="선택..."
         class="w-52"
         size="sm"
