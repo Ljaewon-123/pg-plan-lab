@@ -13,6 +13,7 @@ const items = [
     { label: 'Explain', icon: 'i-heroicons-document-magnifying-glass', to: '/explain' },
     { label: 'Table', icon: 'i-heroicons-table-cells', to: '/pg/table' },
     { label: 'Tram', icon: 'i-heroicons-queue-list', to: '/pg/tram' },
+    { label: 'Timeseries', icon: 'i-heroicons-chart-bar', to: '/pg/timeseries' },
   ],
 ]
 </script>
