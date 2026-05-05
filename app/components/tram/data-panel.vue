@@ -17,6 +17,8 @@ const emit = defineEmits<{
 
 const newRow = ref<Record<string, string>>({})
 
+const formColumns = computed(() => props.columns.filter((c) => c !== 'id'))
+
 watch(
   () => props.columns,
   (cols) => {
@@ -68,9 +70,15 @@ function handleSave() {
     >
       <div class="text-xs font-medium text-blue-600 dark:text-blue-400 mb-2">
         새 행 입력
+        <span
+          v-if="columns.includes('id')"
+          class="ml-2 text-[10px] font-normal text-gray-500"
+        >
+          id는 ULID로 자동 생성됩니다
+        </span>
       </div>
       <div class="grid grid-cols-2 gap-2">
-        <div v-for="col in columns" :key="col" class="flex flex-col gap-1">
+        <div v-for="col in formColumns" :key="col" class="flex flex-col gap-1">
           <label class="text-xs text-gray-500 font-mono">{{ col }}</label>
           <UInput
             v-model="newRow[col]"
